@@ -64,6 +64,8 @@
     '<symbol id="i-ofuda" viewBox="0 0 24 24"><path d="M7 2.5h10v18l-5-2.5L7 20.5z"/><path d="M12 6v6"/></symbol>' +
     '<symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>' +
     '<symbol id="i-swipe" viewBox="0 0 24 24"><path d="M4 8h16M16 4l4 4-4 4"/><path d="M11 14.5v-3a1.5 1.5 0 0 1 3 0v4l2 1.5a4 4 0 0 1 1.5 3.5v1"/><path d="M11 14.5 9 16.5"/></symbol>' +
+    '<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>' +
+    '<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>' +
     "</svg>";
 
   function injectIcons() {

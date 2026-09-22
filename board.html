@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>キャラ図鑑 | 放課後の居残り</title>
-<meta name="description" content="先生41種・生徒35種、総勢76体のキャラクターと固有能力を紹介。">
-<meta property="og:title" content="キャラ図鑑 | 放課後の居残り">
-<meta property="og:description" content="先生41種・生徒35種、総勢76体のキャラクターと固有能力を紹介。">
+<title>掲示板 | 放課後の居残り</title>
+<meta name="description" content="みんなで一言を書き込む掲示板。1時間で内容が流れる、身軽な井戸端。">
+<meta property="og:title" content="掲示板 | 放課後の居残り">
+<meta property="og:description" content="みんなで一言を書き込む掲示板。1時間で内容が流れる、身軽な井戸端。">
 <meta property="og:image" content="https://houkago-inokori.com/img/ogp.png">
-<meta property="og:url" content="https://houkago-inokori.com/characters.html">
+<meta property="og:url" content="https://houkago-inokori.com/board.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="放課後の居残り">
 <meta name="twitter:card" content="summary_large_image">
@@ -46,48 +46,67 @@
   <div class="bg-anim bg-anim--window" aria-hidden="true"></div>
   <div class="bg-rays" aria-hidden="true"></div>
   <div class="container">
-    <div class="breadcrumb"><a href="index.html">ホーム</a> / キャラ図鑑</div>
-    <div class="eyebrow">CHARACTERS</div>
-    <h1 class="h-chalk">キャラ図鑑</h1>
-    <p class="lead">先生41種・生徒35種。総勢76体の個性。</p>
+    <div class="breadcrumb"><a href="index.html">ホーム</a> / 掲示板</div>
+    <div class="eyebrow">BOARD</div>
+    <h1 class="h-chalk">掲示板</h1>
+    <p class="lead">一言だけ、黒板の隅に。1時間経つと消えていく、身軽な井戸端。</p>
   </div>
-  <span class="hand" aria-hidden="true">誰が、追う側？<br>誰が、逃げる側？</span>
+  <span class="hand" aria-hidden="true">気に入ったら<br>「保存」で<br>手元に残せる</span>
 </section>
 
 <section class="section">
-  <div class="container">
-    <div class="char-toolbar">
-      <div class="side-tabs" role="tablist" aria-label="先生と生徒の切り替え">
-        <button type="button" role="tab" class="side-tab side-tab--red" data-side="teacher" aria-selected="true"><svg class="ic " aria-hidden="true"><use href="#i-user"/></svg>先生 <span data-count="teacher">41</span></button>
-        <button type="button" role="tab" class="side-tab side-tab--blue" data-side="student" aria-selected="false"><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg>生徒 <span data-count="student">35</span></button>
-      </div>
-      <label class="search"><svg class="ic " aria-hidden="true"><use href="#i-search"/></svg><input type="search" id="char-search" placeholder="キャラ名で検索" aria-label="キャラクターを名前で検索" autocomplete="off"></label>
-      <div class="char-hint"><svg class="ic " aria-hidden="true"><use href="#i-tap"/></svg>カードをタップして固有能力を見る</div>
+  <div class="container container--narrow">
+
+    <div class="board-status" id="boardStatus" hidden></div>
+
+    <div class="tabs" role="tablist" aria-label="掲示板の表示切り替え">
+      <button type="button" role="tab" id="tabPost" aria-selected="true" data-tab="post">みんなの掲示板</button>
+      <button type="button" role="tab" id="tabSaved" aria-selected="false" data-tab="saved">保存した投稿</button>
     </div>
 
-    <div class="char-grid" id="char-grid"></div>
-    <div class="char-empty" id="char-empty" hidden>見つかりませんでした。検索語を変えてみてください。</div>
-    <div class="pager" id="pager"></div>
+    <div class="bd-panel is-active" id="panelPost">
+      <div class="card bd-compose" id="composeCard" hidden>
+        <div class="bd-compose__row">
+          <button type="button" class="bd-avatar-btn" id="composeIconBtn" aria-haspopup="true" aria-expanded="false">
+            <span class="avatar" id="composeIconView">👤</span>
+          </button>
+          <div class="bd-compose__body">
+            <input type="text" id="composeName" maxlength="20" placeholder="表示名（10〜20文字まで）">
+            <textarea id="composeText" maxlength="200" rows="2" placeholder="一言、黒板に書いてみよう（200文字まで）"></textarea>
+            <div class="bd-compose__foot">
+              <span class="bd-compose__count"><span id="composeCount">0</span>/200</span>
+              <button type="button" class="btn btn--primary" id="composeSend"><svg class="ic " aria-hidden="true"><use href="#i-chat"/></svg>投稿する</button>
+            </div>
+            <div class="bd-icongrid" id="composeIconGrid" hidden></div>
+            <p class="bd-cooldown" id="composeCooldown" hidden></p>
+          </div>
+        </div>
+      </div>
 
-    <div class="char-detail" id="char-detail" hidden tabindex="-1"></div>
+      <div class="card bd-locked" id="lockedCard" hidden>
+        <svg class="ic ic--lg" aria-hidden="true"><use href="#i-lock"/></svg>
+        <div>
+          <p class="bd-locked__title">投稿するには連携が必要です</p>
+          <p class="bd-locked__text">「放課後の居残り」をブラウザで一度開くと、自動でこの掲示板と連携します（同じ端末・同じブラウザなら次からもずっと連携したままです）。連携すると自分だけの投稿ID（ゲーム内のIDと共通）が使えるようになります。</p>
+          <div class="bd-locked__actions">
+            <a class="btn btn--primary" href="https://tanakatakeshi811-spec.github.io/houkago-inokori/" target="_blank" rel="noopener"><svg class="ic " aria-hidden="true"><use href="#i-play"/></svg>ゲームを開いて連携する</a>
+            <button type="button" class="btn btn--outline" id="recheckLinkBtn"><svg class="ic " aria-hidden="true"><use href="#i-search"/></svg>連携状態を確認する</button>
+          </div>
+        </div>
+      </div>
 
-    <a class="card char-cta char-cta--blue" id="char-cta" href="#" >
-      <div class="char-cta__art"></div>
-      <div class="char-cta__body"><div class="char-cta__title" id="char-cta-title">生徒35種もチェック</div><div class="char-cta__text" id="char-cta-text">逃げて、協力して、脱出を目指そう。</div></div>
-      <div class="char-cta__end"><svg class="ic " aria-hidden="true"><use href="#i-arrow-right"/></svg></div>
-    </a>
+      <div class="bd-meta"><svg class="ic " aria-hidden="true"><use href="#i-clock"/></svg><span>投稿は1時間で自動的に流れます。気に入ったものは「保存」で残せます。</span></div>
+      <div class="bd-list" id="bdList"></div>
+      <div class="bd-status" id="bdStatus">読み込み中…</div>
+    </div>
+
+    <div class="bd-panel" id="panelSaved" hidden>
+      <div class="bd-meta"><svg class="ic " aria-hidden="true"><use href="#i-clipboard"/></svg><span>保存した投稿は元の投稿が消えてもここに残ります。あなたのIDでのみ見られます。</span></div>
+      <div class="bd-list" id="savedList"></div>
+      <div class="bd-status" id="savedStatus">連携すると保存した投稿が表示されます</div>
+    </div>
+
   </div>
-</section>
-
-<section class="cta-band">
-  <div class="bg-anim bg-anim--window" aria-hidden="true"></div>
-  <div class="bg-rays" aria-hidden="true"></div>
-  <div class="container reveal">
-    <h2 class="h-chalk h-chalk--plain">自分に合うキャラで、<br>校舎へ。</h2>
-    <p class="lead lead--center">76体の中に、きっとあなたの1体がいる。</p>
-    <a class="btn btn--primary btn--lg" href="https://tanakatakeshi811-spec.github.io/houkago-inokori/"><svg class="ic " aria-hidden="true"><use href="#i-play"/></svg>今すぐ遊ぶ（無料）</a>
-  </div>
-  <span class="hand" aria-hidden="true">放課後は、<br>まだ終わってない。</span>
 </section>
 
 </main>
@@ -108,7 +127,6 @@
   </div>
 </footer>
 <script src="js/common.js"></script>
-<script src="js/characters-data.js"></script>
-<script src="js/characters.js"></script>
+<script src="js/board.js"></script>
 </body>
 </html>
