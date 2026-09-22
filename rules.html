@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ルール・遊び方 | 放課後の居残り</title>
+<meta name="description" content="生徒は逃げて脱出、先生は全員捕まえる。基本ルール・操作方法・3つのモード・ミニ体験・よくある質問。">
+<meta property="og:title" content="ルール・遊び方 | 放課後の居残り">
+<meta property="og:description" content="生徒は逃げて脱出、先生は全員捕まえる。基本ルール・操作方法・3つのモード・ミニ体験・よくある質問。">
+<meta property="og:image" content="https://houkago-inokori.com/img/ogp.png">
+<meta property="og:url" content="https://houkago-inokori.com/rules.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="放課後の居残り">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0d1517">
+<link rel="icon" href="img/favicon.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Yusei+Magic&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="preload" as="image" href="img/bg/window.jpg" fetchpriority="high">
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ</a>
+<div class="grain" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html"><img class="brand__mark" src="img/logo-mark.png" alt="" width="34" height="34" decoding="async"><span class="brand__name">放課後の居残り</span></a>
+    <div class="header__spacer"></div>
+    <nav class="nav-desktop" aria-label="メインメニュー"><a href="index.html">ホーム</a><a href="rules.html">ルール・遊び方</a><a href="characters.html">キャラ図鑑</a><a href="history.html">歴史</a><a href="ranking.html">ランキング</a><a href="about.html">このゲームについて</a></nav>
+    <a class="btn btn--primary header__cta" href="https://tanakatakeshi811-spec.github.io/houkago-inokori/"><svg class="ic " aria-hidden="true"><use href="#i-play"/></svg>今すぐ遊ぶ</a>
+    <button class="nav-toggle" aria-label="メニューを開く" aria-expanded="false"><svg class="ic " aria-hidden="true"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+<div class="drawer">
+  <div class="drawer__backdrop"></div>
+  <div class="drawer__panel" role="dialog" aria-label="メニュー">
+    <div class="drawer__head"><span class="drawer__title">MENU</span><button class="nav-toggle drawer__close" aria-label="メニューを閉じる"><svg class="ic " aria-hidden="true"><use href="#i-x"/></svg></button></div>
+    <nav><a href="index.html">ホーム<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a><a href="rules.html">ルール・遊び方<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a><a href="characters.html">キャラ図鑑<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a><a href="history.html">歴史<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a><a href="ranking.html">ランキング<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a><a href="about.html">このゲームについて<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a></nav>
+    <a class="btn btn--primary btn--block" href="https://tanakatakeshi811-spec.github.io/houkago-inokori/"><svg class="ic " aria-hidden="true"><use href="#i-play"/></svg>今すぐ遊ぶ（無料）</a>
+  </div>
+</div>
+<main id="main">
+<section class="page-hero">
+  <div class="bg-anim bg-anim--window" aria-hidden="true"></div>
+  <div class="bg-rays" aria-hidden="true"></div>
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">ホーム</a> / ルール・遊び方</div>
+    <div class="eyebrow">HOW TO PLAY</div>
+    <h1 class="h-chalk">ルール・遊び方</h1>
+    <p class="lead">生徒は逃げて脱出。先生は全員捕まえる。</p><nav class="subnav" aria-label="ページ内リンク"><a href="#basic" class="is-active">基本ルール</a><a href="#controls">操作方法</a><a href="#try">ミニ体験</a><a href="#faq">FAQ</a></nav>
+  </div>
+  <span class="hand" aria-hidden="true">また、<br>ここで<br>会おう。</span>
+</section>
+
+<section class="section" id="basic">
+  <div class="container">
+    <h2 class="h-chalk reveal" style="margin-bottom:22px">基本ルール</h2>
+    <div class="grid" style="gap:16px" data-stagger>
+      <div class="card rule-card rule-card--student card--blue reveal">
+        <div class="rule-card__art"><span class="hand role-card__hand">生きて、みんなで<br>ここから出よう。</span></div>
+        <div class="rule-card__body">
+          <h3 class="rule-card__title t-blue">生徒側<small>課題をこなして脱出</small></h3>
+          <ul class="role-card__list">
+            <li><svg class="ic " aria-hidden="true"><use href="#i-clipboard"/></svg>課題で脱出ゲージを進める</li>
+            <li><svg class="ic " aria-hidden="true"><use href="#i-run"/></svg>ロッカー・板・窓を使って逃げる</li>
+            <li><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg>捕まった仲間を救助する</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card rule-card rule-card--teacher card--red reveal reveal--d1">
+        <div class="rule-card__art"><span class="hand role-card__hand">逃がさない。<br>ひとりも。</span></div>
+        <div class="rule-card__body role-card--red">
+          <h3 class="rule-card__title t-red">先生側<small>全員を捕まえる</small></h3>
+          <ul class="role-card__list">
+            <li><svg class="ic " aria-hidden="true"><use href="#i-skull"/></svg>見つけて攻撃、担いで椅子へ</li>
+            <li><svg class="ic " aria-hidden="true"><use href="#i-chair"/></svg>全員を椅子に座らせたら勝利</li>
+            <li><svg class="ic " aria-hidden="true"><use href="#i-pulse"/></svg>心音で接近が伝わる。奇襲を工夫しよう</li>
+          </ul>
+          <div class="role-card__warn"><svg class="ic " aria-hidden="true"><use href="#i-alert"/></svg>救助のタイミングに注意。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3 class="card__title">救助のルール（ここだけ覚えておこう）</h3>
+      <ul class="card__text">
+        <li>捕まると担がれて、椅子に座らされる。仲間が助けに来るまで<b>連打して抵抗</b>できる。</li>
+        <li><b>2回目</b>に椅子へ座らされた仲間は、32秒後に必ずスキルチェックが飛んでくる。</li>
+        <li>危険な状態から救助した直後は<b>即死</b>する。助けるタイミングを見極めよう。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section section--board" id="controls">
+  <div class="container">
+    <div class="head-row reveal" style="justify-content:space-between">
+      <div class="head-row" style="margin:0"><h2 class="h-chalk">操作方法</h2><p class="lead">スマホでも直感的に遊べます。</p></div>
+      <div class="toggle" role="group" aria-label="端末の切り替え"><button type="button" data-device="pc" aria-pressed="false">PC</button><button type="button" data-device="sp" aria-pressed="true">スマホ</button></div>
+    </div>
+    <div class="controls reveal">
+      <div class="phone-mock" id="ctl-mock-sp">
+        <div class="phone-mock__notch"></div>
+        <span class="phone-mock__hand hand" aria-hidden="true">指先で、<br>逃げ切れ。</span>
+        <div class="phone-mock__stick"></div>
+        <div class="phone-mock__btn" style="right:8%;top:14%"><svg class="ic " aria-hidden="true"><use href="#i-eye"/></svg></div>
+        <div class="phone-mock__btn" style="right:8%;bottom:30%"><svg class="ic " aria-hidden="true"><use href="#i-run"/></svg></div>
+        <div class="phone-mock__btn" style="right:22%;bottom:12%"><svg class="ic " aria-hidden="true"><use href="#i-tap"/></svg></div>
+      </div>
+      <div class="pc-mock" id="ctl-mock-pc" hidden>
+        <div class="pc-mock__screen">
+          <span class="pc-mock__hand hand" aria-hidden="true">キーボードで、<br>逃げ切れ。</span>
+        </div>
+        <div class="pc-mock__stand" aria-hidden="true"></div>
+        <div class="pc-mock__desk">
+          <div class="keycaps" aria-hidden="true">
+            <div class="keycap-row"><span class="keycap">Q</span><span class="keycap is-on">W</span><span class="keycap">E</span><span class="keycap">R</span><span class="keycap">T</span></div>
+            <div class="keycap-row"><span class="keycap is-on">A</span><span class="keycap is-on">S</span><span class="keycap is-on">D</span><span class="keycap">F</span><span class="keycap">H</span></div>
+            <div class="keycap-row"><span class="keycap keycap--wide">Shift</span><span class="keycap keycap--space">space</span></div>
+          </div>
+          <div class="mouse" aria-hidden="true"><span class="mouse__wheel"></span></div>
+        </div>
+      </div>
+      <div class="keys" id="ctl-sp" data-stagger>
+        <div class="key-row"><svg class="ic " aria-hidden="true"><use href="#i-gamepad"/></svg>移動：左スティック</div>
+        <div class="key-row"><svg class="ic " aria-hidden="true"><use href="#i-eye"/></svg>視点：右スワイプ</div>
+        <div class="key-row"><svg class="ic " aria-hidden="true"><use href="#i-run"/></svg>走る：ダッシュボタン</div>
+        <div class="key-row"><svg class="ic " aria-hidden="true"><use href="#i-hand"/></svg>使う・乗り越える：Fボタン</div>
+        <div class="key-row"><svg class="ic " aria-hidden="true"><use href="#i-locker"/></svg>隠れる：近接時のボタン</div>
+        <div class="key-row"><svg class="ic " aria-hidden="true"><use href="#i-flashlight"/></svg>アイテム：Fボタン直下のボタン</div>
+        <div class="key-row"><svg class="ic " aria-hidden="true"><use href="#i-music"/></svg>エモート：ダンスボタン</div>
+      </div>
+      <div class="keys" id="ctl-pc" hidden>
+        <div class="key-row"><svg class="ic " aria-hidden="true"><use href="#i-gamepad"/></svg>移動：<span><span class="kbd">W</span><span class="kbd">A</span><span class="kbd">S</span><span class="kbd">D</span></span></div>
+        <div class="key-row"><svg class="ic " aria-hidden="true"><use href="#i-eye"/></svg>視点：マウス</div>
+        <div class="key-row"><svg class="ic " aria-hidden="true"><use href="#i-run"/></svg>走る：<span class="kbd">Shift</span></div>
+        <div class="key-row"><svg class="ic " aria-hidden="true"><use href="#i-hand"/></svg>行動（課題・救助・攻撃）：<span><span class="kbd">E</span> / 左クリック</span></div>
+        <div class="key-row"><svg class="ic " aria-hidden="true"><use href="#i-door"/></svg>使う・乗り越える・板を倒す：<span class="kbd">F</span></div>
+        <div class="key-row"><svg class="ic " aria-hidden="true"><use href="#i-locker"/></svg>隠れる：<span class="kbd">H</span></div>
+        <div class="key-row"><svg class="ic " aria-hidden="true"><use href="#i-zap"/></svg>固有能力：<span><span class="kbd">Q</span>　能力2：<span class="kbd">R</span></span></div>
+        <div class="key-row"><svg class="ic " aria-hidden="true"><use href="#i-music"/></svg>エモート：<span class="kbd">T</span>　マイク：<span class="kbd">2</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="head-row reveal"><h2 class="h-chalk">3つのモード</h2><p class="lead">気分と人数に合わせて選べる。</p></div>
+    <div class="grid" style="gap:12px" data-stagger>
+      <div class="card mode-row mode-row--1 reveal"><div class="mode-row__art"></div><div class="mode-row__body"><h3 class="mode-row__title">通常モード</h3><div class="vs"><span class="vs__side vs__side--red"><svg class="ic " aria-hidden="true"><use href="#i-user"/></svg>先生 1</span><span class="vs__x">vs</span><span class="vs__side vs__side--blue"><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg>生徒 4</span></div></div><p class="mode-row__text">課題をこなして脱出。まずはここから。</p></div>
+      <div class="card mode-row mode-row--2 reveal"><div class="mode-row__art"></div><div class="mode-row__body"><h3 class="mode-row__title">2vs8モード</h3><div class="vs"><span class="vs__side vs__side--red"><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg>先生 2</span><span class="vs__x">vs</span><span class="vs__side vs__side--blue"><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg>生徒 8</span></div></div><p class="mode-row__text">大人数でスリルのある鬼ごっこ。2人目の先生はAIのことも。</p></div>
+      <div class="card mode-row mode-row--3 reveal"><div class="mode-row__art"></div><div class="mode-row__body"><h3 class="mode-row__title">怪異退治モード</h3><div class="vs"><span class="vs__side vs__side--red"><svg class="ic " aria-hidden="true"><use href="#i-skull"/></svg>追跡者 1</span><span class="vs__x">vs</span><span class="vs__side vs__side--blue"><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg>生徒 最大7</span></div></div><p class="mode-row__text">御札を集めて追跡者を封印。最後は生徒が反撃する。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--board">
+  <div class="container">
+    <div class="head-row reveal"><h2 class="h-chalk">持ち物・パーク</h2><p class="lead">組み合わせて、あなただけの立ち回りを。</p></div>
+    <div class="grid grid--3" data-stagger>
+      <div class="card func-card reveal"><svg class="ic " aria-hidden="true"><use href="#i-backpack"/></svg><div><h3 class="func-card__title">持ち物</h3><p class="func-card__text">懐中電灯や注射器など、試合中に使う道具。使い方次第で形勢が変わる。</p></div></div>
+      <div class="card func-card reveal reveal--d1"><svg class="ic " aria-hidden="true"><use href="#i-cards"/></svg><div><h3 class="func-card__title">パーク</h3><p class="func-card__text">33種類の特殊能力。使い込むほどレベルアップして効果が強くなる。</p></div></div>
+      <div class="card func-card reveal reveal--d2"><svg class="ic " aria-hidden="true"><use href="#i-gear"/></svg><div><h3 class="func-card__title">アドオン</h3><p class="func-card__text">持ち物に追加効果をつける小道具。組み合わせで戦略の幅が広がる。</p></div></div>
+    </div>
+    <p style="margin-top:16px"><a href="characters.html">キャラ図鑑で1人1人の固有能力を見る <svg class="ic " aria-hidden="true"><use href="#i-arrow-right"/></svg></a></p>
+  </div>
+</section>
+
+<section class="section" id="try">
+  <div class="container">
+    <div class="head-row reveal"><h2 class="h-chalk">遊ぶ前に、ミニ体験</h2><p class="lead">実際の操作を少しだけ体験できます。</p></div>
+    <div class="tabs reveal" role="tablist" aria-label="ミニ体験の切り替え">
+      <button type="button" role="tab" aria-selected="true" data-mg="mg-skillcheck">スキルチェック</button>
+      <button type="button" role="tab" aria-selected="false" data-mg="mg-mash">もがき</button>
+      <button type="button" role="tab" aria-selected="false" data-mg="mg-dodge">攻撃・回避</button>
+    </div>
+
+    <div class="card mg is-active reveal" id="mg-skillcheck" role="tabpanel">
+      <div class="mg-head">
+        <h3>スキルチェックに挑戦</h3>
+        <p>椅子から2回目に仲間を助け出すと、32秒後に必ずこの「スキルチェック」が飛んでくる。針がオレンジのゾーンに入った瞬間にボタンを押そう。</p>
+        <div><span class="mg-status" id="sc-status">タップして開始</span></div>
+      </div>
+      <div class="mg-stage">
+        <div class="mg-stage__hint">タイミングよく<br>タップしよう。</div>
+        <div class="qte-ring">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <circle class="track" cx="100" cy="100" r="86"></circle>
+            <circle class="zone" id="sc-zone" cx="100" cy="100" r="86" stroke-dasharray="0 540" stroke-dashoffset="0"></circle>
+            <circle id="sc-needle" cx="100" cy="14" r="7" fill="#ff7a1f"></circle>
+          </svg>
+          <div class="qte-center"><div><div id="sc-result" style="font-size:30px">🎯</div><div>SPACEキー / タップ</div></div></div>
+        </div>
+        <div class="mg-stage__side">
+          <p>オレンジの部分で<br>タップすると成功！</p>
+          <button type="button" class="mg-btn" id="sc-btn"><svg class="ic " aria-hidden="true"><use href="#i-tap"/></svg>タップして開始</button>
+        </div>
+      </div>
+      <div class="mg-foot" id="sc-foot">成功: 0 / 挑戦: 0</div>
+    </div>
+
+    <div class="card mg reveal" id="mg-mash" role="tabpanel">
+      <div class="mg-head">
+        <h3>もがき（拘束からの抵抗）</h3>
+        <p>先生に担がれてしまった時は、両手を交互に連打して抵抗できる。制限時間内にゲージを満タンにしよう。（PCは ← → または A / D）</p>
+        <div><span class="mg-status" id="mash-status">タップして開始</span></div>
+      </div>
+      <div class="mg-stage" style="flex-direction:column;gap:14px">
+        <div class="mash-meter" style="max-width:520px;width:100%"><div class="mash-fill" id="mash-fill"></div></div>
+        <div class="mash-buttons">
+          <button type="button" class="mash-key" id="mash-left" aria-label="左手（←キー / Aキー）">L</button>
+          <button type="button" class="mash-key" id="mash-right" aria-label="右手（→キー / Dキー）">R</button>
+        </div>
+        <div class="mg-foot" id="mash-time" style="margin:0">残り 6.0秒</div>
+      </div>
+      <div style="display:flex;justify-content:center;margin-top:14px"><button type="button" class="mg-btn" id="mash-start">スタート</button></div>
+    </div>
+
+    <div class="card mg reveal" id="mg-dodge" role="tabpanel">
+      <div class="mg-head">
+        <h3>攻撃・回避のコツ</h3>
+        <p>先生は攻撃の前に一瞬「構え」を見せる。その構えを見てからよけボタンを押そう。早すぎても遅すぎても被弾する。</p>
+        <div><span class="mg-status" id="dodge-status">タップして開始</span></div>
+      </div>
+      <div class="mg-stage">
+        <div class="dodge-flash" id="dodge-flash"></div>
+        <div class="dodge-windup" id="dodge-windup">構え！</div>
+        <div class="dodge-stage">
+          <div class="dodge-lane"></div>
+          <div class="dodge-teacher" id="dodge-teacher" style="left:6%">🧑‍🏫</div>
+          <div class="dodge-player">🏃</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:center;margin-top:14px"><button type="button" class="mg-btn" id="dodge-btn">はじめる</button></div>
+      <div class="mg-foot" id="dodge-foot">成功: 0 / 挑戦: 0</div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--board" id="faq">
+  <div class="container">
+    <div class="head-row reveal"><h2 class="h-chalk">よくある質問</h2><p class="lead">困ったときは、こちらを確認。</p></div>
+    <div class="faq" data-stagger>
+      <details open><summary><svg class="ic " aria-hidden="true"><use href="#i-phone"/></svg>重い・カクつく<svg class="ic faq__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary><div class="faq__body">設定メニューから画質（解像度・シャドウなど）を下げてみてください。特にスマホでは画質を1段階下げるだけで大きく改善することが多いです。</div></details>
+      <details><summary><svg class="ic " aria-hidden="true"><use href="#i-mic"/></svg>マイクが使えない<svg class="ic faq__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary><div class="faq__body">ブラウザがマイクの使用許可を求めるポップアップを出しているはずなので「許可」を選んでください。誤って拒否した場合は、アドレスバー付近のサイト設定からマイク権限を許可し直してください。</div></details>
+      <details><summary><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg>友達と繋がらない<svg class="ic faq__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary><div class="faq__body">部屋コードに誤りがないか確認してください。数字・記号を含めて完全に一致している必要があります。それでも繋がらない場合は、時間を置いてもう一度部屋を作り直してみてください。</div></details>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="bg-anim bg-anim--window" aria-hidden="true"></div>
+  <div class="bg-rays" aria-hidden="true"></div>
+  <div class="container reveal">
+    <h2 class="h-chalk h-chalk--plain">感覚はつかめた？<br>本編で試そう。</h2>
+    <p class="lead lead--center">ここで覚えたことは、そのまま校舎で使える。</p>
+    <a class="btn btn--primary btn--lg" href="https://tanakatakeshi811-spec.github.io/houkago-inokori/"><svg class="ic " aria-hidden="true"><use href="#i-play"/></svg>今すぐ遊ぶ（無料）</a>
+  </div>
+  <span class="hand" aria-hidden="true">放課後は、<br>まだ終わってない。</span>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer__logo">放課後の<br>居残り</div>
+        <p class="footer__desc">放課後の学校で、生徒が逃げて先生が捕まえる。ブラウザで遊べる3Dオンライン鬼ごっこ。</p>
+      </div>
+      <div class="footer__cols">
+        <div class="footer__col"><h4>サイト</h4><a href="rules.html">ルール・遊び方</a><a href="characters.html">キャラ図鑑</a><a href="history.html">歴史</a><a href="ranking.html">ランキング</a></div>
+        <div class="footer__col"><h4>ゲーム</h4><a href="https://tanakatakeshi811-spec.github.io/houkago-inokori/">今すぐ遊ぶ</a><a href="about.html">このゲームについて</a></div>
+      </div>
+      <div class="footer__hand"><span class="hand">また、<br>みんなで<br>あそぼう。</span></div>
+    </div>
+    <div class="footer__bottom"><span>&copy; <span data-year>2026</span> たますけ</span><span class="hand">放課後は、まだ終わってない。</span></div>
+  </div>
+</footer>
+<script src="js/common.js"></script>
+<script src="js/minigames.js"></script>
+<script src="js/rules.js"></script>
+</body>
+</html>

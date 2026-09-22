@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ランキング | 放課後の居残り</title>
+<meta name="description" content="全モード合計のプレイヤーランキング。ポイント＝勝利＋脱出成功。">
+<meta property="og:title" content="ランキング | 放課後の居残り">
+<meta property="og:description" content="全モード合計のプレイヤーランキング。ポイント＝勝利＋脱出成功。">
+<meta property="og:image" content="https://houkago-inokori.com/img/ogp.png">
+<meta property="og:url" content="https://houkago-inokori.com/ranking.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="放課後の居残り">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0d1517">
+<link rel="icon" href="img/favicon.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Yusei+Magic&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="preload" as="image" href="img/bg/window.jpg" fetchpriority="high">
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ</a>
+<div class="grain" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html"><img class="brand__mark" src="img/logo-mark.png" alt="" width="34" height="34" decoding="async"><span class="brand__name">放課後の居残り</span></a>
+    <div class="header__spacer"></div>
+    <nav class="nav-desktop" aria-label="メインメニュー"><a href="index.html">ホーム</a><a href="rules.html">ルール・遊び方</a><a href="characters.html">キャラ図鑑</a><a href="history.html">歴史</a><a href="ranking.html">ランキング</a><a href="about.html">このゲームについて</a></nav>
+    <a class="btn btn--primary header__cta" href="https://tanakatakeshi811-spec.github.io/houkago-inokori/"><svg class="ic " aria-hidden="true"><use href="#i-play"/></svg>今すぐ遊ぶ</a>
+    <button class="nav-toggle" aria-label="メニューを開く" aria-expanded="false"><svg class="ic " aria-hidden="true"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+<div class="drawer">
+  <div class="drawer__backdrop"></div>
+  <div class="drawer__panel" role="dialog" aria-label="メニュー">
+    <div class="drawer__head"><span class="drawer__title">MENU</span><button class="nav-toggle drawer__close" aria-label="メニューを閉じる"><svg class="ic " aria-hidden="true"><use href="#i-x"/></svg></button></div>
+    <nav><a href="index.html">ホーム<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a><a href="rules.html">ルール・遊び方<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a><a href="characters.html">キャラ図鑑<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a><a href="history.html">歴史<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a><a href="ranking.html">ランキング<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a><a href="about.html">このゲームについて<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a></nav>
+    <a class="btn btn--primary btn--block" href="https://tanakatakeshi811-spec.github.io/houkago-inokori/"><svg class="ic " aria-hidden="true"><use href="#i-play"/></svg>今すぐ遊ぶ（無料）</a>
+  </div>
+</div>
+<main id="main">
+<section class="page-hero">
+  <div class="bg-anim bg-anim--window" aria-hidden="true"></div>
+  <div class="bg-rays" aria-hidden="true"></div>
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">ホーム</a> / ランキング</div>
+    <div class="eyebrow">RANKING</div>
+    <h1 class="h-chalk">ランキング</h1>
+    <p class="lead">あなたの名前を、放課後の記録に。</p>
+  </div>
+  <span class="hand" aria-hidden="true">最後まで<br>逃げ切った者が<br>本当の勝者だ</span>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="notice" id="rank-sample" hidden><svg class="ic " aria-hidden="true"><use href="#i-alert-circle"/></svg><span><b>表示サンプル</b>　｜　以下の順位・数値はデザイン確認用です。</span></div>
+    <div class="rank-meta"><svg class="ic " aria-hidden="true"><use href="#i-trophy"/></svg><span>全モード合計</span><span class="rank-meta__sep">｜</span><span>ポイント ＝ 勝利 ＋ 脱出成功</span></div>
+
+    <div class="podium reveal" id="podium" hidden></div>
+
+    <h2 class="h-chalk" style="margin:30px 0 14px">順位一覧</h2>
+    <div class="rank-head" aria-hidden="true"><span>順位</span><span>プレイヤー</span><span style="text-align:right">pt</span><span style="text-align:right">試合</span><span style="text-align:right">勝率</span><span></span></div>
+    <div class="rank-list" id="rank-list"></div>
+    <div class="rank-status" id="rank-status">読み込み中…</div>
+
+    <div class="card info-card" style="margin-top:22px">
+      <div class="info-card__head"><svg class="ic " aria-hidden="true"><use href="#i-info"/></svg><h3 class="card__title" style="margin:0">ランキングについて</h3></div>
+      <ul>
+        <li>全モードの成績を合計して表示します。</li>
+        <li>ポイントは勝利と脱出成功の回数です。</li>
+        <li>試合結果はプレイヤーのブラウザから送信されます。明らかに異常な値だけを弾く簡易的なチェックのみ行っています。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="bg-anim bg-anim--window" aria-hidden="true"></div>
+  <div class="bg-rays" aria-hidden="true"></div>
+  <div class="container reveal">
+    <h2 class="h-chalk h-chalk--plain">次に名前を刻むのは、<br>あなた。</h2>
+    <p class="lead lead--center">全モード合計。1試合の勝利が、そのまま記録になる。</p>
+    <a class="btn btn--primary btn--lg" href="https://tanakatakeshi811-spec.github.io/houkago-inokori/"><svg class="ic " aria-hidden="true"><use href="#i-play"/></svg>今すぐ遊ぶ（無料）</a>
+  </div>
+  <span class="hand" aria-hidden="true">あの放課後が<br>まだ終わってない</span>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer__logo">放課後の<br>居残り</div>
+        <p class="footer__desc">放課後の学校で、生徒が逃げて先生が捕まえる。ブラウザで遊べる3Dオンライン鬼ごっこ。</p>
+      </div>
+      <div class="footer__cols">
+        <div class="footer__col"><h4>サイト</h4><a href="rules.html">ルール・遊び方</a><a href="characters.html">キャラ図鑑</a><a href="history.html">歴史</a><a href="ranking.html">ランキング</a></div>
+        <div class="footer__col"><h4>ゲーム</h4><a href="https://tanakatakeshi811-spec.github.io/houkago-inokori/">今すぐ遊ぶ</a><a href="about.html">このゲームについて</a></div>
+      </div>
+      <div class="footer__hand"><span class="hand">また、<br>みんなで<br>あそぼう。</span></div>
+    </div>
+    <div class="footer__bottom"><span>&copy; <span data-year>2026</span> たますけ</span><span class="hand">放課後は、まだ終わってない。</span></div>
+  </div>
+</footer>
+<script src="js/common.js"></script>
+<script src="js/ranking.js"></script>
+</body>
+</html>

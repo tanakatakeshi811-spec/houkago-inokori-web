@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>放課後の居残り | ブラウザで遊べる3Dオンライン鬼ごっこ</title>
+<meta name="description" content="放課後の学校で生徒が逃げて先生が捕まえる、ブラウザ3Dオンライン鬼ごっこ。インストール不要・無料・スマホ対応。先生41種・生徒35種から選べる。">
+<meta property="og:title" content="放課後の居残り | ブラウザで遊べる3Dオンライン鬼ごっこ">
+<meta property="og:description" content="放課後の学校で生徒が逃げて先生が捕まえる、ブラウザ3Dオンライン鬼ごっこ。インストール不要・無料・スマホ対応。先生41種・生徒35種から選べる。">
+<meta property="og:image" content="https://houkago-inokori.com/img/ogp.png">
+<meta property="og:url" content="https://houkago-inokori.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="放課後の居残り">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0d1517">
+<link rel="icon" href="img/favicon.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Yusei+Magic&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="preload" as="image" href="img/bg/hero.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="img/hero-title.webp" fetchpriority="high">
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ</a>
+<div class="grain" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html"><img class="brand__mark" src="img/logo-mark.png" alt="" width="34" height="34" decoding="async"><span class="brand__name">放課後の居残り</span></a>
+    <div class="header__spacer"></div>
+    <nav class="nav-desktop" aria-label="メインメニュー"><a href="index.html">ホーム</a><a href="rules.html">ルール・遊び方</a><a href="characters.html">キャラ図鑑</a><a href="history.html">歴史</a><a href="ranking.html">ランキング</a><a href="about.html">このゲームについて</a></nav>
+    <a class="btn btn--primary header__cta" href="https://tanakatakeshi811-spec.github.io/houkago-inokori/"><svg class="ic " aria-hidden="true"><use href="#i-play"/></svg>今すぐ遊ぶ</a>
+    <button class="nav-toggle" aria-label="メニューを開く" aria-expanded="false"><svg class="ic " aria-hidden="true"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+<div class="drawer">
+  <div class="drawer__backdrop"></div>
+  <div class="drawer__panel" role="dialog" aria-label="メニュー">
+    <div class="drawer__head"><span class="drawer__title">MENU</span><button class="nav-toggle drawer__close" aria-label="メニューを閉じる"><svg class="ic " aria-hidden="true"><use href="#i-x"/></svg></button></div>
+    <nav><a href="index.html">ホーム<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a><a href="rules.html">ルール・遊び方<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a><a href="characters.html">キャラ図鑑<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a><a href="history.html">歴史<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a><a href="ranking.html">ランキング<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a><a href="about.html">このゲームについて<svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></a></nav>
+    <a class="btn btn--primary btn--block" href="https://tanakatakeshi811-spec.github.io/houkago-inokori/"><svg class="ic " aria-hidden="true"><use href="#i-play"/></svg>今すぐ遊ぶ（無料）</a>
+  </div>
+</div>
+<main id="main">
+
+<section class="hero">
+  <div class="bg-anim bg-anim--corridor" aria-hidden="true"></div>
+  <div class="bg-rays" aria-hidden="true"></div>
+  <div class="dust" aria-hidden="true"></div>
+  <div class="container">
+    <h1 class="hero__logo"><img src="img/hero-title.webp" alt="チャイムが鳴ったら、はじまり。放課後の居残り" width="1100" height="825" fetchpriority="high" decoding="async"></h1>
+    <p class="hero__lead">放課後、誰もいない校舎で<br>鬼ごっこが始まる。</p>
+    <p class="hero__sub">生徒は課題をこなして脱出。先生は生徒を見つけて捕まえる。</p>
+    <div class="hero__cta">
+      <a class="btn btn--primary btn--lg btn--glow" href="https://tanakatakeshi811-spec.github.io/houkago-inokori/"><svg class="ic " aria-hidden="true"><use href="#i-play"/></svg>今すぐ遊ぶ（無料）</a>
+      <a class="btn btn--outline btn--lg" href="rules.html">ルールを見る</a>
+    </div>
+    <div class="hero__badges">
+      <span class="badge"><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg>先生41種・生徒35種</span>
+      <span class="badge"><svg class="ic " aria-hidden="true"><use href="#i-phone"/></svg>スマホ横画面OK</span>
+      <span class="badge"><svg class="ic " aria-hidden="true"><use href="#i-mic"/></svg>近接ボイスチャット</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container intro">
+    <div class="reveal">
+      <h2 class="h-chalk h-chalk--plain">追われる側になるか、<br>追う側になるか。</h2>
+      <p class="lead">放課後の学校で、生徒が逃げて、先生が捕まえる。<br>ブラウザで遊べる3Dオンライン鬼ごっこ。</p>
+    </div>
+    <div class="feature-list" data-stagger>
+      <div class="feature reveal"><div class="feature__icon"><svg class="ic " aria-hidden="true"><use href="#i-cloud"/></svg></div><div><div class="feature__title">インストール不要</div><div class="feature__text">URLを開くだけ。ダウンロードも会員登録もいらない。</div></div></div>
+      <div class="feature reveal reveal--d1"><div class="feature__icon"><svg class="ic " aria-hidden="true"><use href="#i-phone"/></svg></div><div><div class="feature__title">スマホでもガチで遊べる</div><div class="feature__text">横画面専用のボタン配置で、スマホでも快適。</div></div></div>
+      <div class="feature reveal reveal--d2"><div class="feature__icon"><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg></div><div><div class="feature__title">友達と即対戦</div><div class="feature__text">部屋コードを送るだけ。その場ですぐ一緒に遊べる。</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--board">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">HOW TO PLAY</div>
+      <h2 class="h-chalk">どんなゲーム？</h2>
+      <p class="lead">2つの役割、2つの目的。</p>
+    </div>
+    <div class="grid grid--2" data-stagger>
+      <div class="card role-card role-card--blue card--blue reveal">
+        <div class="role-card__art"><span class="hand role-card__hand">生きて、みんなで<br>ここから出よう。</span></div>
+        <div class="role-card__body">
+          <h3 class="role-card__title t-blue">生徒側<small>逃げて、脱出しろ</small></h3>
+          <p>校舎の課題をこなして脱出ゲージを進めよう。ロッカーに隠れたり、板や窓で逃げ道を作ったり。捕まった仲間を助けながら、脱出を目指そう。</p>
+        </div>
+      </div>
+      <div class="card role-card role-card--red card--red reveal reveal--d1">
+        <div class="role-card__art"><span class="hand role-card__hand">逃がさない。<br>ひとりも。</span></div>
+        <div class="role-card__body">
+          <h3 class="role-card__title t-red">先生側<small>見つけて、捕まえろ</small></h3>
+          <p>心音を頼りに生徒を探し、見つけたら捕まえよう。全員を椅子に座らせれば勝利。先生ごとに異なる固有能力で追い詰めろ。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section stats-band">
+  <div class="container stats-wrap">
+    <h2 class="h-chalk h-chalk--plain reveal" style="margin-bottom:22px">数字で見る「放課後の居残り」</h2>
+    <span class="hand" aria-hidden="true">まだまだ、<br>遊び足りない。</span>
+    <div class="stats reveal">
+      <div class="stat stat--red"><div class="stat__num" data-count="41">41</div><div class="stat__label">先生キャラの種類</div></div>
+      <div class="stat stat--blue"><div class="stat__num" data-count="35">35</div><div class="stat__label">生徒キャラの種類</div></div>
+      <div class="stat stat--orange"><div class="stat__num" data-count="33">33</div><div class="stat__label">パークの種類</div></div>
+      <div class="stat stat--green"><div class="stat__num" data-count="3">3</div><div class="stat__label">対戦モード</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--board">
+  <div class="container">
+    <div class="head-row reveal">
+      <h2 class="h-chalk">3つの対戦モード</h2>
+      <p class="lead">気分と人数に合わせて選べる。</p>
+    </div>
+    <div class="grid grid--3" data-stagger>
+      <div class="card mode-card mode-card--1 card--hover reveal">
+        <div class="mode-card__art"><span class="mode-card__badge">スタンダード</span></div>
+        <div class="mode-card__body">
+          <h3 class="mode-card__title">通常モード</h3>
+          <div class="vs"><span class="vs__side vs__side--red"><svg class="ic " aria-hidden="true"><use href="#i-user"/></svg>先生 1</span><span class="vs__x">vs</span><span class="vs__side vs__side--blue"><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg>生徒 4</span></div>
+          <p class="mode-card__text">課題をこなして脱出、または全員を捕まえる。まずはここから。</p>
+        </div>
+      </div>
+      <div class="card mode-card mode-card--2 card--hover reveal reveal--d1">
+        <div class="mode-card__art"><span class="mode-card__badge">大人数</span></div>
+        <div class="mode-card__body">
+          <h3 class="mode-card__title">2vs8モード</h3>
+          <div class="vs"><span class="vs__side vs__side--red"><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg>先生 2</span><span class="vs__x">vs</span><span class="vs__side vs__side--blue"><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg>生徒 8</span></div>
+          <p class="mode-card__text">仲間も先生も増える大人数の乱戦。校舎全体がスリルに包まれる。</p>
+        </div>
+      </div>
+      <div class="card mode-card mode-card--3 card--hover reveal reveal--d2">
+        <div class="mode-card__art"><span class="mode-card__badge">特殊ルール</span></div>
+        <div class="mode-card__body">
+          <h3 class="mode-card__title">怪異退治モード</h3>
+          <div class="vs"><span class="vs__side vs__side--red"><svg class="ic " aria-hidden="true"><use href="#i-skull"/></svg>追跡者 1</span><span class="vs__x">vs</span><span class="vs__side vs__side--blue"><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg>生徒 最大7</span></div>
+          <p class="mode-card__text">御札を集めて追跡者を封印。最後は生徒が反撃する。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="h-chalk reveal" style="margin-bottom:22px">こだわりの機能</h2>
+    <div class="grid grid--3" data-stagger>
+      <div class="card func-card reveal"><svg class="ic " aria-hidden="true"><use href="#i-mic"/></svg><div><h3 class="func-card__title">近接ボイスチャット</h3><p class="func-card__text">近くにいる人の声だけが聞こえる。隠れているときの緊張感も共有。</p></div></div>
+      <div class="card func-card reveal reveal--d1"><svg class="ic " aria-hidden="true"><use href="#i-shirt"/></svg><div><h3 class="func-card__title">見た目のフルカスタマイズ</h3><p class="func-card__text">色・形・装飾から、お絵かき・画像・動画まで。</p></div></div>
+      <div class="card func-card reveal reveal--d2"><svg class="ic " aria-hidden="true"><use href="#i-music"/></svg><div><h3 class="func-card__title">エモート（ダンス）</h3><p class="func-card__text">専用BGM付きのダンスが8種類以上。仲間と盛り上がろう。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--board">
+  <div class="container">
+    <div class="head-row reveal">
+      <h2 class="h-chalk">友達と遊ぶには</h2>
+      <p class="lead">登録不要。3ステップで同じ校舎へ。</p>
+    </div>
+    <div class="steps" data-stagger>
+      <div class="card step reveal"><div class="step__num">01</div><div><div class="step__title">部屋を作る</div><div class="step__text">「今すぐ遊ぶ」から部屋を作成。発行された部屋コードを確認。</div></div></div>
+      <div class="step__arrow" aria-hidden="true"><svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></div>
+      <div class="card step reveal reveal--d1"><div class="step__num">02</div><div><div class="step__title">コードを送る</div><div class="step__text">LINEやDiscordで、友達にコードを送ろう。</div></div></div>
+      <div class="step__arrow" aria-hidden="true"><svg class="ic " aria-hidden="true"><use href="#i-chevron-right"/></svg></div>
+      <div class="card step reveal reveal--d2"><div class="step__num">03</div><div><div class="step__title">コードを入力して参加</div><div class="step__text">受け取ったコードを入力すれば集合完了。あとは遊ぶだけ。</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="h-chalk reveal" style="margin-bottom:22px">最新のアップデート</h2>
+    <div id="latest-updates" class="updates reveal"></div>
+    <a class="row updates-link reveal" href="history.html">
+      <div class="row__icon"><svg class="ic " aria-hidden="true"><use href="#i-file"/></svg></div>
+      <div class="row__body"><div class="row__title">アップデートの記録はこちら</div><div class="row__sub">このゲームの歩みを全部見る</div></div>
+      <div class="row__end"><svg class="ic " aria-hidden="true"><use href="#i-arrow-right"/></svg></div>
+    </a>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="bg-anim bg-anim--window" aria-hidden="true"></div>
+  <div class="bg-rays" aria-hidden="true"></div>
+  <div class="container reveal">
+    <h2 class="h-chalk h-chalk--plain">準備はいい？<br>チャイムはもう鳴っている。</h2>
+    <p class="lead lead--center">アカウント登録なし、インストール不要。<br>ブラウザを開いた瞬間から、放課後は始まる。</p>
+    <a class="btn btn--primary btn--lg" href="https://tanakatakeshi811-spec.github.io/houkago-inokori/"><svg class="ic " aria-hidden="true"><use href="#i-play"/></svg>今すぐ遊ぶ（無料）</a>
+  </div>
+  <span class="hand" aria-hidden="true">ここから、<br>もう一度。</span>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer__logo">放課後の<br>居残り</div>
+        <p class="footer__desc">放課後の学校で、生徒が逃げて先生が捕まえる。ブラウザで遊べる3Dオンライン鬼ごっこ。</p>
+      </div>
+      <div class="footer__cols">
+        <div class="footer__col"><h4>サイト</h4><a href="rules.html">ルール・遊び方</a><a href="characters.html">キャラ図鑑</a><a href="history.html">歴史</a><a href="ranking.html">ランキング</a></div>
+        <div class="footer__col"><h4>ゲーム</h4><a href="https://tanakatakeshi811-spec.github.io/houkago-inokori/">今すぐ遊ぶ</a><a href="about.html">このゲームについて</a></div>
+      </div>
+      <div class="footer__hand"><span class="hand">また、<br>みんなで<br>あそぼう。</span></div>
+    </div>
+    <div class="footer__bottom"><span>&copy; <span data-year>2026</span> たますけ</span><span class="hand">放課後は、まだ終わってない。</span></div>
+  </div>
+</footer>
+<script src="js/common.js"></script>
+<script src="js/history-data.js"></script>
+</body>
+</html>
