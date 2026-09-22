@@ -42,7 +42,7 @@
   </div>
 </div>
 <main id="main">
-<section class="page-hero">
+<section class="page-hero page-hero--tight">
   <div class="bg-anim bg-anim--window" aria-hidden="true"></div>
   <div class="bg-rays" aria-hidden="true"></div>
   <div class="container">
@@ -54,7 +54,7 @@
   <span class="hand" aria-hidden="true">気に入ったら<br>「保存」で<br>手元に残せる</span>
 </section>
 
-<section class="section">
+<section class="section section--tight">
   <div class="container container--narrow">
 
     <div class="board-status" id="boardStatus" hidden></div>
@@ -85,13 +85,18 @@
 
       <div class="card bd-locked" id="lockedCard" hidden>
         <svg class="ic ic--lg" aria-hidden="true"><use href="#i-lock"/></svg>
-        <div>
+        <div class="bd-locked__body">
           <p class="bd-locked__title">投稿するには連携が必要です</p>
-          <p class="bd-locked__text">「放課後の居残り」をブラウザで一度開くと、自動でこの掲示板と連携します（同じ端末・同じブラウザなら次からもずっと連携したままです）。連携すると自分だけの投稿ID（ゲーム内のIDと共通）が使えるようになります。</p>
+          <p class="bd-locked__text">①「放課後の居残り」のタイトル画面右上の「連携」を押すと6桁のコードが表示されます。②そのコードを下の「連携する」から入力してください（別の端末・別のブラウザからでもOKです）。</p>
           <div class="bd-locked__actions">
-            <a class="btn btn--primary" href="https://tanakatakeshi811-spec.github.io/houkago-inokori/" target="_blank" rel="noopener"><svg class="ic " aria-hidden="true"><use href="#i-play"/></svg>ゲームを開いて連携する</a>
-            <button type="button" class="btn btn--outline" id="recheckLinkBtn"><svg class="ic " aria-hidden="true"><use href="#i-search"/></svg>連携状態を確認する</button>
+            <a class="btn btn--outline" href="https://tanakatakeshi811-spec.github.io/houkago-inokori/" target="_blank" rel="noopener"><svg class="ic " aria-hidden="true"><use href="#i-play"/></svg>ゲームを開く</a>
+            <button type="button" class="btn btn--primary" id="linkStartBtn"><svg class="ic " aria-hidden="true"><use href="#i-check"/></svg>連携する</button>
           </div>
+          <form class="bd-linkform" id="linkForm" hidden>
+            <input type="text" id="linkCodeInput" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="6桁のコード" autocomplete="off">
+            <button type="submit" class="btn btn--primary" id="linkSubmitBtn">連携する</button>
+          </form>
+          <p class="bd-linkform__msg" id="linkMsg" hidden></p>
         </div>
       </div>
 

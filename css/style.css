@@ -315,6 +315,9 @@ ul { margin: 0; padding-left: 1.3em; }
 .page-hero .lead { margin-top: 12px; font-size: 16px; color: var(--chalk); }
 .page-hero .hand { position: absolute; right: 24px; bottom: 0; display: none; }
 @media (min-width: 900px) { .page-hero { padding: 64px 0 56px; } .page-hero .hand { display: inline-block; } }
+/* 掲示板ページ専用: ヒーローを詰めて投稿一覧までの距離を短くする(下までスクロールしないと投稿が見えない問題の対策) */
+.page-hero--tight { padding-bottom: 22px; }
+@media (min-width: 900px) { .page-hero--tight { padding-bottom: 30px; } }
 
 /* ---------- 6. トップ：ヒーロー ---------- */
 .hero {
@@ -955,16 +958,22 @@ ul { margin: 0; padding-left: 1.3em; }
 .role-card__glyph { display: none; }
 
 /* ---------- 17. 掲示板 ---------- */
-.board-status { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--line-strong); background: rgba(20, 38, 35, 0.6); font-size: 13.5px; margin-bottom: 16px; width: fit-content; }
-.board-status .ic { color: var(--green); }
+/* 連携中パネル。テキストと「解除する」ボタンをflexで並べる。fit-contentは
+   デスクトップでピル状に見せるためのものだが、テキストが伸びても
+   max-width:100%で必ずコンテナ内に収まるようにしておく(モバイル安全策) */
+.board-status { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 10px 16px; border-radius: 16px; border: 1px solid var(--line-strong); background: rgba(20, 38, 35, 0.6); font-size: 13.5px; margin-bottom: 14px; width: fit-content; max-width: 100%; }
+.board-status .ic { color: var(--green); flex: none; }
 .board-status b { color: var(--chalk); font-variant-numeric: tabular-nums; }
+.board-status__text { min-width: 0; }
+.bd-unlink-btn { flex: none; border: 1px solid var(--line-strong); background: rgba(13, 21, 23, 0.55); color: var(--chalk-dim); font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; transition: border-color 0.2s, color 0.2s; }
+.bd-unlink-btn:hover { border-color: var(--red); color: var(--red); }
 
 .bd-panel[hidden] { display: none; }
 
-.bd-compose { display: flex; margin-bottom: 18px; }
-.bd-compose__row { display: flex; gap: 14px; width: 100%; align-items: flex-start; }
+.bd-compose { display: flex; margin-bottom: 14px; }
+.bd-compose__row { display: flex; gap: 12px; width: 100%; align-items: flex-start; }
 .bd-avatar-btn { flex: none; border-radius: 50%; }
-.bd-avatar-btn .avatar { width: 48px; height: 48px; font-size: 24px; cursor: pointer; transition: border-color 0.2s, transform 0.2s; }
+.bd-avatar-btn .avatar { width: 40px; height: 40px; font-size: 20px; margin: 0; cursor: pointer; transition: border-color 0.2s, transform 0.2s; }
 .bd-avatar-btn:hover .avatar { border-color: var(--orange); transform: scale(1.05); }
 .bd-compose__body { flex: 1; min-width: 0; display: grid; gap: 8px; }
 #composeName {
@@ -986,27 +995,43 @@ ul { margin: 0; padding-left: 1.3em; }
 .bd-cooldown { color: var(--orange-2); font-size: 12.5px; font-weight: 700; margin: 0; }
 .bd-cooldown[hidden] { display: none; }
 
-.bd-locked { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 18px; }
+.bd-locked { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 14px; }
 .bd-locked .ic--lg { color: var(--orange-2); flex: none; margin-top: 2px; }
+.bd-locked__body { min-width: 0; }
 .bd-locked__title { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
 .bd-locked__text { color: var(--chalk-dim); font-size: 13.5px; }
 .bd-locked__actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.bd-linkform { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.bd-linkform[hidden] { display: none; }
+#linkCodeInput {
+  flex: 1; min-width: 120px; box-sizing: border-box; background: rgba(13, 21, 23, 0.55); border: 1px solid var(--line-strong);
+  color: var(--chalk); padding: 10px 12px; border-radius: 9px; font-size: 18px; letter-spacing: 0.3em; text-align: center; font-variant-numeric: tabular-nums;
+}
+#linkCodeInput:focus { outline: none; border-color: var(--orange); }
+.bd-linkform__msg { font-size: 13px; font-weight: 700; margin-top: 8px; color: var(--chalk-dim); }
+.bd-linkform__msg.ok { color: var(--green); }
+.bd-linkform__msg.bad { color: var(--red); }
+.bd-linkform__msg[hidden] { display: none; }
 
-.bd-meta { display: flex; align-items: center; gap: 8px; color: var(--chalk-dim); font-size: 13px; margin-bottom: 14px; }
+.bd-meta { display: flex; align-items: center; gap: 8px; color: var(--chalk-dim); font-size: 12.5px; margin-bottom: 10px; }
 .bd-meta .ic { color: var(--blue); flex: none; }
 
-.bd-list { display: grid; gap: 10px; }
-.bd-post { padding: 14px 16px; background: rgba(20, 38, 35, 0.6); border: 1px solid var(--line); border-radius: 12px; animation: card-in 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-.bd-post__head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.bd-post__head .avatar { width: 34px; height: 34px; font-size: 17px; flex: none; }
-.bd-post__name { font-weight: 700; font-size: 14.5px; }
+/* 投稿一覧はページ全体をどこまでもスクロールさせず、この枠の中だけで
+   スクロールさせる(「掲示板がどんどん下に行って見えなくなる」対策)。
+   新しい投稿はAPI側で既に先頭に来る順なので、枠の一番上を見れば常に最新。 */
+.bd-list { display: grid; gap: 8px; max-height: min(64vh, 560px); overflow-y: auto; padding-right: 4px; scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+.bd-list::-webkit-scrollbar { width: 6px; }
+.bd-list::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 999px; }
+.bd-post { padding: 10px 12px; background: rgba(20, 38, 35, 0.6); border: 1px solid var(--line); border-radius: 10px; animation: card-in 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.bd-post__head { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.bd-post__head .avatar { width: 26px; height: 26px; font-size: 13px; margin: 0; flex: none; }
+.bd-post__name { font-weight: 700; font-size: 13.5px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 45%; }
 .bd-post__id { color: var(--chalk-faint); font-size: 11.5px; font-variant-numeric: tabular-nums; }
-.bd-post__time { margin-left: auto; color: var(--chalk-dim); font-size: 12px; text-align: right; flex: none; white-space: nowrap; }
-.bd-post__left { display: block; color: var(--chalk-faint); font-size: 11px; }
-.bd-post__text { font-size: 14.5px; white-space: pre-wrap; word-break: break-word; color: var(--chalk); }
-.bd-post__actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
+.bd-post__time { margin-left: auto; color: var(--chalk-dim); font-size: 11.5px; text-align: right; flex: none; white-space: nowrap; }
+.bd-post__text { font-size: 14px; white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere; color: var(--chalk); }
+.bd-post__actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
 .bd-post__actions button {
-  display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; font-size: 12.5px; font-weight: 700;
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 700;
   border: 1px solid var(--line-strong); background: rgba(13, 21, 23, 0.55); color: var(--chalk-dim); transition: border-color 0.2s, color 0.2s;
 }
 .bd-post__actions button:hover { border-color: var(--orange); color: var(--orange-2); }
@@ -1014,7 +1039,7 @@ ul { margin: 0; padding-left: 1.3em; }
 .bd-post__actions button .ic { width: 14px; height: 14px; }
 .bd-del-btn:hover { border-color: var(--red) !important; color: var(--red) !important; }
 
-.bd-status { padding: 22px; text-align: center; color: var(--chalk-dim); font-size: 14px; }
+.bd-status { padding: 18px; text-align: center; color: var(--chalk-dim); font-size: 14px; }
 .bd-status.bad { color: var(--red); }
 .bd-status[hidden] { display: none; }
 

@@ -1,30 +1,32 @@
 /* 掲示板ページ
    -------------------------------------------------------------------------
-   「連携」の仕組みについて: ゲーム本体(houkago-inokori)とこの公式サイト
-   (houkago-inokori-web)はどちらもGitHub Pagesのユーザーサイト
-   (tanakatakeshi811-spec.github.io)配下のプロジェクトページで、パスが
-   違うだけで同一オリジン。localStorageは「オリジン単位」で共有されるので、
-   ゲーム側が起動時に発行するhi_pid_v1・プロフィール(hi_profile_v1)は、
-   このページのJSからもそのまま localStorage.getItem() で読める。
-   よってURLに?pid=...を付けて受け渡す方式は不要（不要な情報をURLに
-   載せない分、こちらのほうが安全）。「ゲームを一度でも開けばこのサイト
-   でも自動的に連携済みになる」という体験になる。
-   別タブでゲームを開いて連携した場合にも気づけるよう、storageイベント
-   (同一オリジンの他タブでの変更を検知できる)も監視している。
+   「連携」の仕組みについて(2026-09-22: 6桁コード方式に変更):
+   以前はゲーム本体(houkago-inokori)と公式サイト(houkago-inokori-web)が
+   GitHub Pagesの同一オリジンであることを利用し、ゲーム側が発行する
+   hi_pid_v1をこのページのJSからlocalStorageで直接読む「自動連携」だった。
+   ただしこの方式は同じブラウザでしか成立せず、①違う端末・違うブラウザ
+   から連携できない、②「連携を解除する」を作ろうとしても、ゲームを
+   一度でも開いたブラウザだと再度自動連携してしまい解除が意味をなさない、
+   という制約があった。
+   そこで「ゲームのタイトル画面でワンタイムの6桁コードを発行→この掲示板
+   ページでそのコードを入力→サーバー(Worker)がコードをplayer_idに交換」
+   という方式に一本化した。連携状態は、このページの専用キー
+   (LINKED_PID_KEY)にサーバーから返ってきたplayer_idを保存することだけで
+   判定する。「解除する」はこのキーを消すだけで、ゲーム側のhi_pid_v1には
+   一切触れない(ゲームのプレイ自体・スコア等には影響しない)。
    ------------------------------------------------------------------------- */
 (function () {
   "use strict";
 
   var API = "https://houkago-inokori-relay.shunri-ai.workers.dev";
-  var PID_KEY = "hi_pid_v1";
-  var PROFILE_KEY = "hi_profile_v1";
+  var LINKED_PID_KEY = "hi_board_linked_pid_v1"; // この掲示板ページでの連携状態(サーバー発行のplayer_id)
+  var PROFILE_KEY = "hi_profile_v1"; // 名前・アイコンはゲーム側と同じキーを共用(同じブラウザなら見た目も揃う。連携判定には使わない)
   var BOARD_WINDOW_MS = 60 * 60 * 1000;
   var COOLDOWN_MS = 3000;
   var ICONS = ["🦊", "🐱", "🐰", "🐼", "🐸", "🦉", "🐧", "🦁", "🐻", "🐨", "🐵", "🦔", "🐹", "🦄", "🐙", "🐢", "🦋", "🐝", "🌟", "🔥"];
 
   var esc = window.HI && window.HI.esc ? window.HI.esc : function (s) { return String(s == null ? "" : s); };
 
-  var elStatus = document.getElementById("boardStatus");
   var elComposeCard = document.getElementById("composeCard");
   var elLockedCard = document.getElementById("lockedCard");
   var elComposeName = document.getElementById("composeName");
@@ -35,7 +37,11 @@
   var elComposeIconView = document.getElementById("composeIconView");
   var elComposeIconGrid = document.getElementById("composeIconGrid");
   var elComposeCooldown = document.getElementById("composeCooldown");
-  var elRecheckBtn = document.getElementById("recheckLinkBtn");
+  var elBoardStatus = document.getElementById("boardStatus");
+  var elLinkStartBtn = document.getElementById("linkStartBtn");
+  var elLinkForm = document.getElementById("linkForm");
+  var elLinkCodeInput = document.getElementById("linkCodeInput");
+  var elLinkMsg = document.getElementById("linkMsg");
   var elBdList = document.getElementById("bdList");
   var elBdStatus = document.getElementById("bdStatus");
   var elSavedList = document.getElementById("savedList");
@@ -49,15 +55,22 @@
 
   var pid = null;
   var profile = { name: "", icon: "" };
-  var lastLocalPostAt = 0;
   var savedIdsBySource = {}; // sourcePostId -> saveId (このタブで取得済みの保存一覧から)
   var cooldownTimer = null;
   var listTimer = null;
 
-  /* ---- localStorage(ゲーム本体と共有) ---- */
-  function readPid() {
-    try { return localStorage.getItem(PID_KEY) || null; } catch (e) { return null; }
+  /* ---- 連携状態(このページ専用キー) ---- */
+  function readLinkedPid() {
+    try { return localStorage.getItem(LINKED_PID_KEY) || null; } catch (e) { return null; }
   }
+  function writeLinkedPid(p) {
+    try { localStorage.setItem(LINKED_PID_KEY, p); } catch (e) {}
+  }
+  function clearLinkedPid() {
+    try { localStorage.removeItem(LINKED_PID_KEY); } catch (e) {}
+  }
+
+  /* ---- プロフィール(名前・アイコン、ゲーム側と共用キー): 連携判定には使わない、見た目の初期値だけ ---- */
   function readProfile() {
     try {
       var raw = localStorage.getItem(PROFILE_KEY);
@@ -81,7 +94,7 @@
     var h = Math.floor(min / 60);
     return h + "時間前";
   }
-  function timeLeft(ts) {
+  function timeLeftText(ts) {
     var remain = ts + BOARD_WINDOW_MS - Date.now();
     if (remain <= 0) return "まもなく消えます";
     var min = Math.ceil(remain / 60000);
@@ -89,32 +102,89 @@
     return "残り" + min + "分";
   }
 
-  /* ---- 連携状態のチェック・UI反映 ---- */
-  function checkLink(silent) {
-    var newPid = readPid();
-    var changed = newPid !== pid;
-    pid = newPid;
+  /* ---- 連携中パネル・投稿フォームの表示切り替え ---- */
+  function refreshLinkUI() {
+    pid = readLinkedPid();
     profile = readProfile();
     if (pid) {
       elComposeCard.hidden = false;
       elLockedCard.hidden = true;
-      elStatus.hidden = false;
-      elStatus.innerHTML =
+      elBoardStatus.hidden = false;
+      elBoardStatus.innerHTML =
         '<svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>' +
-        "<span>連携中｜あなたのID：<b>" + esc(pid) + "</b>（このIDはサイト側からは変更できません）</span>";
+        '<span class="board-status__text">連携中｜あなたのID：<b>' + esc(pid) + "</b></span>" +
+        '<button type="button" class="bd-unlink-btn" id="unlinkBtn">連携を解除</button>';
+      var unlinkBtn = document.getElementById("unlinkBtn");
+      if (unlinkBtn) unlinkBtn.addEventListener("click", handleUnlink);
       elComposeName.value = profile.name || "";
       elComposeIconView.textContent = profile.icon || ICONS[0];
       if (!profile.icon) { profile.icon = ICONS[0]; }
     } else {
       elComposeCard.hidden = true;
       elLockedCard.hidden = false;
-      elStatus.hidden = true;
+      elBoardStatus.hidden = true;
+      elBoardStatus.innerHTML = "";
+      elLinkForm.hidden = true;
+      elLinkCodeInput.value = "";
+      elLinkMsg.hidden = true;
     }
-    if (changed && !silent) {
-      fetchSaved();
-    }
-    return pid;
   }
+
+  function handleUnlink() {
+    if (!window.confirm("連携を解除しますか？このブラウザでは投稿できなくなります(投稿・保存した内容は消えません)。")) return;
+    clearLinkedPid();
+    refreshLinkUI();
+    fetchSaved();
+    renderPosts(lastPosts);
+  }
+
+  /* ---- 連携フロー(6桁コード) ---- */
+  elLinkStartBtn.addEventListener("click", function () {
+    var open = elLinkForm.hidden;
+    elLinkForm.hidden = !open;
+    elLinkMsg.hidden = true;
+    if (open) elLinkCodeInput.focus();
+  });
+
+  function setLinkMsg(text, kind) {
+    elLinkMsg.hidden = false;
+    elLinkMsg.textContent = text;
+    elLinkMsg.className = "bd-linkform__msg" + (kind ? " " + kind : "");
+  }
+
+  elLinkForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var code = (elLinkCodeInput.value || "").trim();
+    if (!/^[0-9]{6}$/.test(code)) {
+      setLinkMsg("6桁の数字で入力してください。", "bad");
+      return;
+    }
+    var submitBtn = document.getElementById("linkSubmitBtn");
+    submitBtn.disabled = true;
+    fetch(API + "/api/link/redeem", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ code: code }),
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        submitBtn.disabled = false;
+        if (data && data.ok && data.playerId) {
+          writeLinkedPid(data.playerId);
+          setLinkMsg("連携しました。", "ok");
+          refreshLinkUI();
+          fetchList();
+          fetchSaved();
+        } else {
+          setLinkMsg("コードが正しくないか、有効期限(10分)が切れています。", "bad");
+        }
+      })
+      .catch(function (e) {
+        submitBtn.disabled = false;
+        setLinkMsg("通信エラーで連携できませんでした。", "bad");
+        console.error("[board] link redeem failed", e);
+      });
+  });
 
   /* ---- アイコン選択グリッド ---- */
   function buildIconGrid() {
@@ -138,7 +208,7 @@
     elComposeIconBtn.setAttribute("aria-expanded", open ? "true" : "false");
   });
 
-  /* ---- プロフィール(名前・アイコン)の保存: サーバー(D1)＋ゲーム側localStorage両方に反映 ---- */
+  /* ---- プロフィール(名前・アイコン)の保存: サーバー(D1)＋ゲーム側と共用のlocalStorage両方に反映 ---- */
   var profileSaveTimer = null;
   function syncProfile() {
     if (!pid) return;
@@ -174,7 +244,7 @@
         '<div class="bd-post" data-post-id="' + p.id + '">' +
         '<div class="bd-post__head"><span class="avatar">' + esc(p.icon || "👤") + '</span>' +
         '<span class="bd-post__name">' + esc(p.name || "名無し") + "</span>" +
-        '<span class="bd-post__time">' + timeAgo(p.createdAt) + '<span class="bd-post__left">' + timeLeft(p.createdAt) + "</span></span>" +
+        '<span class="bd-post__time" title="' + esc(timeLeftText(p.createdAt)) + '">' + timeAgo(p.createdAt) + "</span>" +
         "</div>" +
         '<div class="bd-post__text">' + esc(p.text) + "</div>" +
         actionsHtml +
@@ -250,7 +320,6 @@
         if (res.data && res.data.ok) {
           elComposeText.value = "";
           updateComposeCount();
-          lastLocalPostAt = Date.now();
           startCooldownUI(COOLDOWN_MS);
           fetchList();
         } else if (res.status === 429) {
@@ -370,15 +439,8 @@
   elTabPost.addEventListener("click", function () { selectTab("post"); });
   elTabSaved.addEventListener("click", function () { selectTab("saved"); });
 
-  /* ---- 連携の再確認(別タブでゲームを開いて連携した場合など) ---- */
-  elRecheckBtn.addEventListener("click", function () { checkLink(); fetchList(); });
-  window.addEventListener("storage", function (e) {
-    if (e.key === PID_KEY || e.key === PROFILE_KEY) checkLink();
-  });
-  window.addEventListener("focus", function () { checkLink(true); });
-
   /* ---- 初期化 ---- */
-  checkLink(true);
+  refreshLinkUI();
   buildIconGrid();
   updateComposeCount();
   fetchList();
