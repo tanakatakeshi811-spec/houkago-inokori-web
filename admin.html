@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>管理者用パネル | 放課後の居残り</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="img/favicon.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Yusei+Magic&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ</a>
+<div class="grain" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html"><img class="brand__mark" src="img/logo-mark.png" alt="" width="34" height="34" decoding="async"><span class="brand__name">放課後の居残り</span></a>
+    <div class="header__spacer"></div>
+    <nav class="nav-desktop" aria-label="メインメニュー"><a href="index.html">ホーム</a><a href="board.html">掲示板</a></nav>
+  </div>
+</header>
+<main id="main">
+<section class="page-hero page-hero--tight">
+  <div class="container">
+    <div class="eyebrow">ADMIN</div>
+    <h1 class="h-chalk">管理者用パネル</h1>
+    <p class="lead">掲示板の投稿BAN・IP BAN・投稿削除・アカウント削除をここから行えます。実際の操作はすべてサーバー側でパスワードを検証してから実行されます。</p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container container--narrow">
+
+    <div class="card admin-gate" id="adminGate">
+      <p class="admin-section__hint" style="margin-bottom:10px;">管理者パスワードを入力してください。</p>
+      <div class="admin-gate__row">
+        <input type="password" id="adminPassInput" placeholder="管理者パスワード" autocomplete="off">
+        <button type="button" class="btn btn--primary" id="adminLoginBtn">認証する</button>
+      </div>
+      <p class="admin-gate__msg" id="adminGateMsg" hidden></p>
+    </div>
+
+    <div class="admin-panel" id="adminPanel" hidden>
+
+      <div class="board-status" id="adminWhoami">
+        <svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>
+        <span class="board-status__text">管理者として認証済み</span>
+        <button type="button" class="bd-unlink-btn" id="adminLogoutBtn">ログアウト</button>
+      </div>
+
+      <div class="admin-section">
+        <div class="admin-section__title"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg>直近1時間の投稿</div>
+        <p class="admin-section__hint">投稿を「削除」、または投稿者を「この人をBAN」できます。</p>
+        <div class="bd-list" id="adminPostList"></div>
+        <div class="bd-status" id="adminPostStatus">読み込み中…</div>
+      </div>
+
+      <div class="admin-section">
+        <div class="admin-section__title"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg>投稿BAN（player_id指定）</div>
+        <p class="admin-section__hint">指定したIDの投稿ができなくなります。</p>
+        <form class="admin-form" id="banForm">
+          <input type="text" id="banPlayerId" placeholder="player_id" inputmode="numeric" required>
+          <div class="admin-form__row">
+            <input type="number" id="banMinutes" placeholder="BAN時間（分）例: 60" min="1">
+            <label class="admin-check"><input type="checkbox" id="banPermanent"> 永久BAN</label>
+          </div>
+          <input type="text" id="banReason" placeholder="理由（任意）" maxlength="200">
+          <div class="admin-form__foot"><button type="submit" class="btn btn--danger">この player_id をBAN</button></div>
+        </form>
+        <p class="admin-msg" id="banMsg" hidden></p>
+      </div>
+
+      <div class="admin-section">
+        <div class="admin-section__title"><svg class="ic" aria-hidden="true"><use href="#i-network"/></svg>IP BAN（接続元IP指定）</div>
+        <p class="admin-section__hint">player_idはlocalStorageを消せば再発行できてしまうため、同じ人が新しいIDで戻ってくるのを防ぎたい場合はこちら。</p>
+        <form class="admin-form" id="banIpForm">
+          <input type="text" id="banIp" placeholder="IPアドレス（例: 203.0.113.55）" required>
+          <div class="admin-form__row">
+            <input type="number" id="banIpMinutes" placeholder="BAN時間（分）例: 60" min="1">
+            <label class="admin-check"><input type="checkbox" id="banIpPermanent"> 永久BAN</label>
+          </div>
+          <input type="text" id="banIpReason" placeholder="理由（任意）" maxlength="200">
+          <div class="admin-form__foot"><button type="submit" class="btn btn--danger">このIPをBAN</button></div>
+        </form>
+        <p class="admin-msg" id="banIpMsg" hidden></p>
+      </div>
+
+      <div class="admin-section">
+        <div class="admin-section__title"><svg class="ic" aria-hidden="true"><use href="#i-alert-circle"/></svg>現在有効なBAN一覧</div>
+        <button type="button" class="btn btn--outline" id="refreshBansBtn" style="margin-bottom:10px;"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>最新の状態に更新</button>
+        <div class="admin-ban-list" id="adminBanList"></div>
+        <div class="bd-status" id="adminBanStatus">読み込み中…</div>
+      </div>
+
+      <div class="admin-section">
+        <div class="admin-section__title"><svg class="ic" aria-hidden="true"><use href="#i-skull"/></svg>アカウント削除</div>
+        <p class="admin-section__hint">指定したplayer_idのランキング登録・保存済み投稿を削除し、掲示板の投稿は「削除されました」表記に置き換えます（取り消せません）。</p>
+        <form class="admin-form" id="deleteAccountForm">
+          <input type="text" id="deleteAccountId" placeholder="player_id" inputmode="numeric" required>
+          <div class="admin-form__foot"><button type="submit" class="btn btn--danger">このアカウントを削除する</button></div>
+        </form>
+        <p class="admin-msg" id="deleteAccountMsg" hidden></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+</main>
+<script src="js/common.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
