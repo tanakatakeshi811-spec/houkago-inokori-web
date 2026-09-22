@@ -130,31 +130,48 @@
     showGate();
   });
 
-  /* ---- 投稿一覧(投稿削除・投稿者BAN) ---- */
+  /* ---- 投稿一覧(投稿削除・投稿者BAN・IP BAN) ----
+     一般公開の/api/board/listではなく、x-admin-tokenで保護された
+     /api/admin/board/postsを使う(こちらだけIPを含む)。過去(ipカラム追加より
+     前)の投稿はip=nullのまま返ってくるので「IP不明」表示にし、BANボタンも
+     押せないようにする(BANしようがないため)。 */
   function loadPosts() {
     elPostStatus.hidden = false;
     elPostStatus.textContent = "読み込み中…";
-    fetch(API + "/api/board/list")
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        var posts = (data && data.posts) || [];
+    adminFetch("/api/admin/board/posts")
+      .then(function (res) {
+        var data = res.data;
+        if (!(data && data.ok)) {
+          elPostStatus.hidden = false;
+          elPostStatus.className = "bd-status bad";
+          elPostStatus.textContent = "投稿一覧を取得できませんでした。";
+          return;
+        }
+        var posts = data.posts || [];
         if (!posts.length) {
           elPostStatus.hidden = false;
+          elPostStatus.className = "bd-status";
           elPostStatus.textContent = "直近1時間の投稿はありません。";
           elPostList.innerHTML = "";
           return;
         }
         elPostStatus.hidden = true;
         elPostList.innerHTML = posts.map(function (p) {
+          var hasIp = !!p.ip;
+          var ipLabel = hasIp ? esc(p.ip) : "IP不明（この投稿より前のデータ）";
           return (
             '<div class="bd-post" data-post-id="' + p.id + '" data-player-id="' + esc(p.playerId) + '">' +
             '<div class="bd-post__head"><span class="avatar">' + esc(p.icon || "👤") + '</span>' +
             '<span class="bd-post__name">' + esc(p.name || "名無し") + '</span>' +
             '<span class="bd-post__id">ID:' + esc(p.playerId) + '</span>' +
+            '<span class="bd-post__id" title="接続元IP">IP: ' + ipLabel + '</span>' +
             '</div>' +
             '<div class="bd-post__text">' + esc(p.text) + '</div>' +
             '<div class="bd-post__actions">' +
             '<button type="button" class="admin-ban-here-btn" data-player-id="' + esc(p.playerId) + '"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg>この人をBAN</button>' +
+            (hasIp
+              ? '<button type="button" class="admin-ban-ip-here-btn" data-ip="' + esc(p.ip) + '"><svg class="ic" aria-hidden="true"><use href="#i-network"/></svg>このIPをBAN</button>'
+              : '<button type="button" disabled title="この投稿にはIPが記録されていません">このIPをBAN</button>') +
             '<button type="button" class="bd-del-btn" data-post-id="' + p.id + '"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg>削除</button>' +
             '</div>' +
             '</div>'
@@ -167,8 +184,8 @@
             if (!window.confirm("この投稿を削除します。よろしいですか？")) return;
             btn.disabled = true;
             adminFetch("/api/admin/board/delete-post", { method: "POST", body: { id: id } })
-              .then(function (res) {
-                if (res.data && res.data.ok) loadPosts();
+              .then(function (res2) {
+                if (res2.data && res2.data.ok) loadPosts();
                 else { btn.disabled = false; window.alert("削除に失敗しました。"); }
               })
               .catch(function () { btn.disabled = false; window.alert("通信エラーで削除できませんでした。"); });
@@ -179,6 +196,28 @@
             elBanPlayerId.value = btn.dataset.playerId;
             elBanPlayerId.scrollIntoView({ behavior: "smooth", block: "center" });
             elBanPlayerId.focus();
+          });
+        });
+        /* このIPをBAN: IPを手入力させずワンクリックで即BANする主動線。
+           期間はIPBANフォームの既定値(60分)と揃える。永久BANや期間変更を
+           したい場合は下のIPBANフォームを使ってもらう(elBanIpに自動入力)。 */
+        elPostList.querySelectorAll(".admin-ban-ip-here-btn").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var ip = btn.dataset.ip;
+            elBanIp.value = ip;
+            if (!window.confirm("IP: " + ip + " を60分間BANします。よろしいですか？\n(永久BANや時間変更をしたい場合はキャンセルしてIP BANフォームを使ってください)")) return;
+            btn.disabled = true;
+            adminFetch("/api/admin/board/ban-ip", { method: "POST", body: { ip: ip, minutes: 60, reason: "掲示板投稿一覧からのワンクリックBAN" } })
+              .then(function (res2) {
+                btn.disabled = false;
+                if (res2.data && res2.data.ok) {
+                  setMsg(elBanIpMsg, "IPをBANしました。", "ok");
+                  loadBans();
+                } else {
+                  window.alert("IP BANに失敗しました。");
+                }
+              })
+              .catch(function () { btn.disabled = false; window.alert("通信エラーでBANできませんでした。"); });
           });
         });
       })
